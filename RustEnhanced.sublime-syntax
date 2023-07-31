@@ -146,40 +146,7 @@ contexts:
     - include: strings
     - include: chars
 
-    # macros which take format specs as the only parameter
-    - match: '\b((?:format(?:_args)?|e?print(?:ln)?|panic|unreachable|unimplemented)!)\s*(\()'
-      captures:
-        1: support.macro.rust
-        2: meta.group.rust punctuation.section.group.begin.rust
-      push:
-        - meta_content_scope: meta.group.rust
-        - include: comments
-        - include: format-string
-        - include: format-raw-string
-        - match: '(?=\S)'
-          set: group-tail
-
-    # macros which take format specs as the second parameter
-    - match: '\b((?:write(?:ln)?|(?:debug_)?assert)!)\s*(\()'
-      captures:
-        1: support.macro.rust
-        2: meta.group.rust punctuation.section.group.begin.rust
-      push:
-        - meta_scope: meta.group.rust
-        - include: comments
-        - match: ','
-          set:
-            - meta_content_scope: meta.group.rust
-            - include: format-string
-            - include: format-raw-string
-            - match: '(?=\S)'
-              set: group-tail
-        - include: group-tail
-
-    # macros which take format specs as the third parameter
-    # - match: '\b((?:assert_eq|assert_ne|debug_assert_eq|debug_assert_ne)!)\s*(\()'
-    # is more performant as the below
-    # - match: '\b((?:debug_)?assert_(?:eq|ne)!)\s*(\()'
+    - include: macros
 
     - match: '\b{{identifier}}!(?=\s*(\(|\{|\[))'
       scope: support.macro.rust
@@ -1231,6 +1198,47 @@ contexts:
   chars:
     - include: char
     - include: byte
+
+  macros:
+    - include: macros-fmt-only
+    - include: macros-fmt-second
+
+  macros-fmt-only:
+    # macros which take format specs as the only parameter
+    - match: '\b((?:format(?:_args)?|e?print(?:ln)?|panic|unreachable|unimplemented)!)\s*(\()'
+      captures:
+        1: support.macro.rust
+        2: meta.group.rust punctuation.section.group.begin.rust
+      push:
+        - meta_content_scope: meta.group.rust
+        - include: comments
+        - include: format-string
+        - include: format-raw-string
+        - match: '(?=\S)'
+          set: group-tail
+
+  macros-fmt-second:
+    # macros which take format specs as the second parameter
+    - match: '\b((?:write(?:ln)?|(?:debug_)?assert)!)\s*(\()'
+      captures:
+        1: support.macro.rust
+        2: meta.group.rust punctuation.section.group.begin.rust
+      push:
+        - meta_scope: meta.group.rust
+        - include: comments
+        - match: ','
+          set:
+            - meta_content_scope: meta.group.rust
+            - include: format-string
+            - include: format-raw-string
+            - match: '(?=\S)'
+              set: group-tail
+        - include: group-tail
+
+    # macros which take format specs as the third parameter
+    # - match: '\b((?:assert_eq|assert_ne|debug_assert_eq|debug_assert_ne)!)\s*(\()'
+    # is more performant as the below
+    # - match: '\b((?:debug_)?assert_(?:eq|ne)!)\s*(\()'
 
   byte:
     - match: "(b)(')"
