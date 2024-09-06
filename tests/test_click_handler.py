@@ -14,14 +14,14 @@ REPLACEMENT_TESTS = [
         ((11, '    &1 as &dyn Send;'),
          (15, '    Box::new(1) as Box<dyn Send>;')),
     ),
-    ('tests/error-tests/tests/impl-generic-mismatch.rs', '>=1.69.0-beta',
+    ('tests/error-tests/tests/impl-generic-mismatch.rs', '>=1.83.0-beta',
         # Before
         ((20, '    fn foo<U: Debug>(&self, _: &U) { }'),
          (39, '    fn bar(&self, _: &impl Debug) { }')),
         # After
         ((20, '    fn foo(&self, _: &U) { }'),
          (20, '    fn foo(&self, _: &impl Debug) { }'),
-         (39, '    fn bar<U: Debug>(&self, _: &impl Debug) { }'),
+         (39, '    fn bar(&self, _: &U) { }'),
          (39, '    fn bar<U: Debug>(&self, _: &U) { }')),
     ),
 ]
