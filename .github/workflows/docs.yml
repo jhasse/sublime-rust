@@ -5,10 +5,10 @@ on:
       - master
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Install mdbook
@@ -16,18 +16,20 @@ jobs:
         mkdir mdbook
         curl -Lf https://github.com/rust-lang/mdBook/releases/download/v0.4.11/mdbook-v0.4.11-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=./mdbook
         echo `pwd`/mdbook >> $GITHUB_PATH
-    - name: Deploy docs
-      run: |
-        cd docs
-        mdbook build
-        git worktree add gh-pages gh-pages
-        git config user.name "Deploy from CI"
-        git config user.email ""
-        cd gh-pages
-        # Delete the ref to avoid keeping history.
-        git update-ref -d refs/heads/gh-pages
-        rm -rf *
-        mv ../book/* .
-        git add .
-        git commit -m "Deploy $GITHUB_SHA to gh-pages"
-        git push --force
+    - name: Build book
+      run: cd docs && mdbook build
+    - name: Upload page artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: docs/book
+        retention-days: 1
+
+  deploy:
+    permissions:
+      pages: write
+      id-token: write
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

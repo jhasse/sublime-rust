@@ -22,13 +22,8 @@ jobs:
             rust: nightly
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - run: bash ci/install-rust.sh ${{ matrix.rust }}
-      # Temporary workaround until Package Control 4 works
-      # https://github.com/wbond/package_control/issues/1612
-      - name: Fix macOS OpenSSL
-        if: matrix.os == 'macos-latest'
-        run: brew unlink openssl
       - uses: SublimeText/UnitTesting/actions/setup@v1
         with:
           package-name: Rust Enhanced
