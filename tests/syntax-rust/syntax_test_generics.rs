@@ -461,19 +461,20 @@ fn impl_trait_return_use_bound<'a>() -> impl for<'b> Trait1<Item = impl Trait2<'
 //                                                                             ^^ storage.modifier.lifetime
 //                                                                               ^ punctuation.definition.generic.end
 //                                                                                 ^ keyword.operator
-//                                                                                   ^^^^^^^ meta.generic meta.generic
+//                                                                                   ^^^^^^^^ meta.generic
+//                                                                                   ^^^ keyword.other
 //                                                                                      ^ punctuation.definition.generic.begin
 //                                                                                       ^^ storage.modifier.lifetime
-//                                                                                         ^ punctuation.definition.generic.end
-//                                                                                          ^ punctuation.definition.generic.end
+//                                                                                         ^^ punctuation.definition.generic.end
 
 fn impl_trait_use<'a, foo>() -> impl Trait1 + use<'a, Self, foo> {}
 //                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function meta.function.return-type
-//                                            ^^^^^^^^^^^^^^^^^^ meta.generic
+//                                          ^ keyword.operator
+//                                            ^^^ keyword.other
 //                                               ^ punctuation.definition.generic.begin
 //                                                ^^ storage.modifier.lifetime
 //                                                  ^ punctuation.separator
-//                                                    ^^^^ storage.type
+//                                                    ^^^^ keyword.other
 //                                                        ^ punctuation.separator
 //                                                             ^ punctuation.definition.generic.end
 
