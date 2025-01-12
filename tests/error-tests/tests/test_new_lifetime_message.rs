@@ -21,6 +21,9 @@
 //^^^^^^^^^ERR(>=1.63.0-beta) lifetime may not live long enough
 //^^^^^^^^^ERR(>=1.63.0-beta) argument requires that
 //^^^^^^^^^MSG(>=1.63.0-beta) See Also: ↑:2
+//^^^^^^^^^NOTE(>=1.86.0-beta) requirement occurs because
+//^^^^^^^^^NOTE(>=1.86.0-beta) mutable references are invariant
+//^^^^^^^^^HELP(>=1.86.0-beta) see
 }/*END*/
 // ~NOTE(<1.21.0,<1.63.0-beta) ...the reference is valid
 // ~NOTE(<1.21.0,<1.63.0-beta) ...but the borrowed content
