@@ -364,13 +364,6 @@ contexts:
       scope: support.type.rust
 
   return-type:
-    - match: '\bimpl\b'
-      scope: storage.type.impl.rust
-      push:
-        - include: comments
-        - include: impl-generic
-        - match: '(?=\S)'
-          pop: true
     - match: '->'
       scope: punctuation.separator.rust
       push:
@@ -578,6 +571,31 @@ contexts:
     - match: '[-+%/*]'
       scope: keyword.operator.arithmetic.rust
 
+  impl-trait:
+    - match: '\bimpl\b'
+      scope: storage.type.impl.rust
+      push:
+        - match: '\buse\b'
+          scope: keyword.other.rust
+          push:
+            - match: '<'
+              scope: punctuation.definition.generic.begin.rust
+              set:
+                - match: '>'
+                  scope: punctuation.definition.generic.end.rust
+                  pop: true
+                - include: lifetime
+                - match: ','
+                  scope: punctuation.separator.rust
+                - match: \b(Self)\b
+                  scope: keyword.other.rust
+                - match: '{{identifier}}'
+                - match: '(?=\S)'
+                  pop: true
+        - include: type-any-identifier
+        - match: '(?=\S)'
+          pop: true
+
   type-any-identifier:
     - include: comments
     - include: support-type
@@ -604,6 +622,7 @@ contexts:
               pop: true
         - include: type-any-identifier
     - include: lifetime
+    - include: impl-trait
     - match: '\b([[:upper:]]|_*[[:upper:]][[:alnum:]_]*[[:lower:]][[:alnum:]_]*)\b(::)'
       scope: meta.path.rust storage.type.rust
       captures:
