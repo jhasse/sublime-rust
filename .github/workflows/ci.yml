@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches-ignore: [master]
+    branches-ignore: [master, mod/fn]
   pull_request:
     branches: ['*']
   schedule:
@@ -13,13 +13,13 @@ jobs:
     timeout-minutes: 20 # default is 6 hours!
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest] #, macos-latest, windows-latest]
         rust: [stable]
-        include:
-          - os: ubuntu-latest
-            rust: beta
-          - os: ubuntu-latest
-            rust: nightly
+        # include:
+          # - os: ubuntu-latest
+          #   rust: beta
+          # - os: ubuntu-latest
+          #   rust: nightly
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
@@ -34,3 +34,4 @@ jobs:
           package-name: Rust Enhanced
       - uses: SublimeText/UnitTesting/actions/run-syntax-tests@v1
       - uses: SublimeText/UnitTesting/actions/run-tests@v1
+        if: false

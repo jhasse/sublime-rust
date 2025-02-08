@@ -169,6 +169,14 @@ a >>= b;
 //^^^ keyword.operator.assignment
 
 fn call_expressions() {
+    std::fs::create_dir_all(&dirname)?;
+//  ^^^^^^^^^^^^^^^^^^^^^^^ meta.function meta.block
+//  ^^^ meta.path
+//       ^^ meta.path
+//         ^^ punctuation.accessor
+//           ^^^^^^^^^^^^^^ variable.function
+//                         ^ meta.group punctuation.section.group.begin
+//                                  ^ meta.group punctuation.section.group.end
     call();
 //  ^^^^ variable.function
 //      ^ meta.group punctuation.section.group.begin

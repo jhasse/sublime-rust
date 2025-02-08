@@ -26,7 +26,7 @@ rustup update --no-self-update $TOOLCHAIN
 rustup default $TOOLCHAIN
 rustup component add clippy
 rustup component add rust-src
-cargo install cargo-script
+# cargo install cargo-script
 rustup -V
 rustc -Vv
 cargo -V

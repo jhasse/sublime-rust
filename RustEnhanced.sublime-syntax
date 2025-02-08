@@ -10,6 +10,7 @@ variables:
   # include a word boundary at the end to ensure all possible characters are
   # consumed, to prevent catastrophic backtracking
   identifier: '(?:(?:(?:r\#)?{{non_raw_ident}})\b)'
+  function_identifier: '[[:lower:]_][[:lower:][:digit:]_]'
   camel_ident: '\b_*[A-Z][a-zA-Z0-9_]*[a-z][a-zA-Z0-9_]*\b'
   lifetime: '''(?:_|{{non_raw_ident}})(?!\'')\b'
   escaped_char: '\\([nrt0\"''\\]|x[0-7]\h|u\{(?:\h_*){1,6}\})'
@@ -213,7 +214,7 @@ contexts:
       scope: punctuation.separator.rust
       push: after-operator
 
-    - match: '\b[[:lower:]_][[:lower:][:digit:]_]*\s*(?=\()'
+    - match: '\b{{function_identifier}}*\s*(?=\()'
       scope: variable.function.rust
 
     - match: '{{identifier}}'
@@ -1500,6 +1501,15 @@ contexts:
         - match: '::'
           scope: punctuation.accessor.rust
           set: no-type-names
+
+    - match: '(::)(?={{function_identifier}}\s*\()'
+      push:
+        - meta_scope: meta.path.rust
+        - match: '{{function_identifier}}'
+          scope: variable.function.rust
+        - match: ''
+          pop: true
+
     - match: '(::)(?={{identifier}})'
       scope: meta.path.rust
       captures:
