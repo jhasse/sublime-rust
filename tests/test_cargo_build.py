@@ -385,17 +385,6 @@ class TestCargoBuild(TestBase):
         else:
             raise AssertionError('Failed to find %r' % pattern)
 
-    def test_script(self):
-        """Test "Script" variant."""
-        self._with_open_file('tests/multi-targets/mystery.rs',
-            self._test_script)
-
-    def _test_script(self, view):
-        window = view.window()
-        self._run_build_wait('script')
-        output = self._get_build_output(window)
-        self.assertRegex(output, '(?m)^Hello Mystery$')
-
     def test_features(self):
         """Test feature selection."""
         self._with_open_file('tests/multi-targets/src/bin/feats.rs',

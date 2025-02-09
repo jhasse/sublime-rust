@@ -38,8 +38,8 @@ class CargoExecCommand(sublime_plugin.WindowCommand):
     settings = None
     # Directory where to run the command.
     working_dir = None
-    # Path used for the settings key.  This is typically `working_dir` except
-    # for `cargo script`, in which case it is the path to the .rs source file.
+    # Path used for the settings key. This is typically `working_dir`
+    # (previously was used for script paths, now unused).
     settings_path = None
 
     def run(self, command=None, command_info=None, settings=None):
@@ -135,7 +135,7 @@ class CargoExecCommand(sublime_plugin.WindowCommand):
             cmd.run(functools.partial(self._on_manifest_choice, on_done))
         else:
             # For now, assume you need a Rust file if not needing a manifest
-            # (for `cargo script`).
+            # (previously used for `cargo script`, now unused).
             view = self.window.active_view()
             if util.active_view_is_rust(view=view):
                 self.settings_path = view.file_name()

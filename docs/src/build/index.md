@@ -42,7 +42,6 @@ Bench | <code>cargo&nbsp;bench</code> | Runs benchmarks.
 Clean | <code>cargo&nbsp;clean</code> | Removes all built files.
 Document | <code>cargo&nbsp;doc</code> | Builds package documentation.
 Clippy | <code>cargo&nbsp;clippy</code> | Runs [Clippy](https://github.com/Manishearth/rust-clippy). Clippy must be installed, and currently requires the nightly toolchain.
-Script | <code>cargo&nbsp;script&nbsp;$path</code> | Runs [Cargo Script](https://github.com/DanielKeep/cargo-script). Cargo Script must be installed. This is an addon that allows you to run a Rust source file like a script (without a Cargo.toml manifest).
 
 You can add custom build variants, see [Custom Build Variants](custom.md) for more.
 
