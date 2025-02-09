@@ -38,8 +38,7 @@ Key | Description
 `"variants"` | Settings per build variant.
 `"defaults"` | Default settings used if not set per target or variant.
 
-Paths should be an absolute path to the directory of a Cargo package, or the
-path to a Rust source file (when used with `cargo script`).
+Paths should be an absolute path to the directory of a Cargo package.
 
 `"paths"` is an object of path keys mapping to an object with the keys:
 
@@ -107,7 +106,7 @@ Setting Name | Description
 `extra_run_args` | String of extra arguments passed to Cargo (after the `--` flags separator).
 `env` | Object of environment variables to add when running Cargo.
 `working_dir` | The directory where to run Cargo. If not specified, uses the value from `default_path`, otherwise attempts to detect from the active view, or displays a panel to choose a Cargo package.
-`script_path` | Path to a `.rs` script, used by `cargo script` if you want to hard-code a specific script to run.
+`script_path` | Path to a `.rs` script (previously used by `cargo script`, now unused).
 `no_default_features` | If True, sets the `--no-default-features` flag.
 
 The extra args settings support standard Sublime variable expansion (see [Build System Variables](https://www.sublimetext.com/docs/build_systems.html)).

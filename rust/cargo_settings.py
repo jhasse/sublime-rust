@@ -99,17 +99,6 @@ CARGO_COMMANDS = {
         'allows_features': True,
         'allows_json': True,
     },
-    'script': {
-        'name': 'Script',
-        'command': 'script',
-        'allows_target': False,
-        'allows_target_triple': False,
-        'allows_release': False,
-        'allows_features': False,
-        'allows_json': False,
-        'requires_view_path': True,
-        'requires_manifest': False,
-    },
 }
 
 
@@ -357,7 +346,7 @@ class CargoSettings(object):
         :param cmd_info: Dictionary from `CARGO_COMMANDS` with rules on how to
             construct the command.
         :param settings_path: The absolute path to the Cargo project root
-            directory or script.
+            directory.
         :param working_dir: The directory where Cargo is to be run (typically
             the project root).
         :keyword initial_settings: Initial settings to inject which override
@@ -425,7 +414,7 @@ class CargoSettings(object):
                     result.append('--features')
                     result.append(v)
 
-        # Add path from current active view (mainly for "cargo script").
+        # Add path from current active view (mainly for "cargo script", now unused).
         if cmd_info.get('requires_view_path', False):
             script_path = get_computed('script_path')
             if not script_path:
